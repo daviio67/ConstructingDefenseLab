@@ -15,7 +15,7 @@
 
       Write-Host "Installing Forwarder..."
 
-      Start-Process msiexec.exe -ArgumentList '/I C:\SplunkFiles\forwarder.msi AGREETOLICENSE=Yes SPLUNKUSERNAME=Condef SPlUNKPASSWORD=Temp1234!! RECEIVING_INDEXER="10.{{ range_second_octet }}.10.11:9997" /quiet' -PassThru -Wait
+      Start-Process msiexec.exe -ArgumentList '/I C:\SplunkFiles\forwarder.msi AGREETOLICENSE=Yes SPLUNKUSERNAME=Condef SPLUNKPASSWORD=Temp1234!! RECEIVING_INDEXER="10.{{ range_second_octet }}.10.11:9997" /quiet' -PassThru -Wait
 
       Write-Host "Installing Windows TA App.."
 

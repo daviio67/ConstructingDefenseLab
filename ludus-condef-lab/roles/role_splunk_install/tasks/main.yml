@@ -15,7 +15,7 @@
 
       Write-Host "Starting Splunk Install..."
 
-      Start-Process msiexec.exe -ArgumentList '/I C:\SplunkFiles\splunk.msi AGREETOLICENSE=Yes SPLUNKUSERNAME=Condef SPlUNKPASSWORD=Temp1234!! /quiet' -PassThru -Wait
+      Start-Process msiexec.exe -ArgumentList '/I C:\SplunkFiles\splunk.msi AGREETOLICENSE=Yes SPLUNKUSERNAME=Condef SPLUNKPASSWORD=Temp1234!! /quiet' -PassThru -Wait
 
       Write-Host "Creating Indexes..."
 
