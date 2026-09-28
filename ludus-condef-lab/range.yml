@@ -147,7 +147,7 @@ ludus:
       k8s_splunk_index: "kube"
       ludus_k8s_splunk_hec_token: "b448817b-e664-4fce-93fa-79d0c90ba57"
       # Calculate Splunk server IP based on VLAN and octet
-      ludus_k8s_splunk_server_ip: "10.2.10.11"
+      ludus_k8s_splunk_server_ip: "10.{{ range_second_octet }}.10.11"
 
 
   - vm_name: "{{ range_id }}-pcap"

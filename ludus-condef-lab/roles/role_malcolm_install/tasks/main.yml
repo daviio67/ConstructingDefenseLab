@@ -36,20 +36,20 @@
   meta: reset_connection
 - name: Download Malcolm Install Script 
   ansible.builtin.shell:
-    cmd: wget --no-check-certificate -O /home/debian/malcolm_debian12_installer.sh "https://raw.githubusercontent.com/Antonlovesdnb/ConstructingDefenseLab/refs/heads/main/files/malcolm_debian12_installer.sh"
+    cmd: wget --no-check-certificate -O /home/debian/malcolm_debian_installer.sh "https://raw.githubusercontent.com/Antonlovesdnb/ConstructingDefenseLab/refs/heads/main/files/malcolm_debian_installer.sh"
 - name: Add Execute Perms to Script
   ansible.builtin.shell:
-   cmd: chmod +x /home/debian/malcolm_debian12_installer.sh
+   cmd: chmod +x /home/debian/malcolm_debian_installer.sh
 - name: Check if script exists and is executable
   ansible.builtin.stat:
-    path: /home/debian/malcolm_debian12_installer.sh
+    path: /home/debian/malcolm_debian_installer.sh
   register: script_stat
 - name: Show script status
   debug:
     var: script_stat
 - name: Test script syntax
   ansible.builtin.shell:
-    cmd: bash -n /home/debian/malcolm_debian12_installer.sh
+    cmd: bash -n /home/debian/malcolm_debian_installer.sh
   become: yes
   register: syntax_check
   ignore_errors: yes
@@ -58,7 +58,7 @@
     var: syntax_check
 - name: Run Malcolm Install Script, this is pulling containers and will take a while
   ansible.builtin.shell:
-    cmd: bash -x /home/debian/malcolm_debian12_installer.sh 2>&1 | tee /tmp/malcolm_install.log
+    cmd: bash -x /home/debian/malcolm_debian_installer.sh 2>&1 | tee /tmp/malcolm_install.log
     chdir: /home/debian
   become: yes
   async: 3600  # 1 hour timeout
@@ -86,7 +86,7 @@
   when: malcolm_root_dir.stat.exists
 - name: Run Malcolm Install Script again as non-root to set up auth, this will be quicker and we're almost done 
   ansible.builtin.shell:
-    cmd: bash -x /home/debian/malcolm_debian12_installer.sh 
+    cmd: bash -x /home/debian/malcolm_debian_installer.sh 
     chdir: /home/debian
   become: yes
   become_user: debian
