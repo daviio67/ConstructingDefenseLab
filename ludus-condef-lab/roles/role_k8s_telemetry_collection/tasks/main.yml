@@ -132,8 +132,9 @@
 
 - name: Start minikube with audit logging
   ansible.builtin.shell: 
-    cmd: minikube start \
-      --extra-config=apiserver.audit-policy-file=/etc/ssl/certs/audit-policy.yaml \
+    cmd: >-
+      minikube start
+      --extra-config=apiserver.audit-policy-file=/etc/ssl/certs/audit-policy.yaml
       --extra-config=apiserver.audit-log-path=-
   become: true
   become_user: debian
