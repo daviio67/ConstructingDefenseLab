@@ -21,7 +21,7 @@
     cmd: chown -R splunkfwd:splunkfwd /opt/splunkforwarder
 - name: Add forwarder server
   ansible.builtin.shell:
-    cmd: /opt/splunkforwarder/bin/splunk add forward-server dc:9997 --accept-license --answer-yes --no-prompt
+    cmd: /opt/splunkforwarder/bin/splunk add forward-server 10.{{ range_second_octet }}.10.11:9997 --accept-license --answer-yes --no-prompt
 - name: Add Laurel Telemetry to Splunk
   ansible.builtin.shell:
     cmd: /opt/splunkforwarder/bin/splunk add monitor /var/log/laurel/audit.log -index linux

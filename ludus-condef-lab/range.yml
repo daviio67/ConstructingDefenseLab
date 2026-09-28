@@ -22,7 +22,7 @@ ludus:
       splunk_hec_token_description: "K8s Logs from LinuxV"
       splunk_index_name: "kube"
       splunk_hec_disable_ssl: true
-      ludus_splunk_expected_token: "b448817b-e664-4fce-93fa-79d0c90ba57"
+      ludus_splunk_expected_token: "0ebd3b96-8a06-41fe-a6c6-b6ef05a1b076"
 
     testing:                # This key controls the behavior of the VM in testing mode. If undefined, both values are set to true
       snapshot: true        # Snapshot this VM going into testing, and revert it coming out of testing. Default: true
@@ -49,7 +49,7 @@ ludus:
       - role_splunk_collector_certer
     role_vars:
       ludus_adcs_domain: condef.local
-      ludus_adcs_ca_host: CERTER
+      ludus_adcs_ca_host: "{{ range_id }}-CERTER"
       ludus_adcs_domain_username: "condef.local\\Administrator"
       ludus_adcs_domain_password: 'Temp1234!!'
       ludus_adcs_ca_common_name: certer-CA
@@ -145,7 +145,7 @@ ludus:
     role_vars:
       k8s_cluster_name: "minkube"
       k8s_splunk_index: "kube"
-      ludus_k8s_splunk_hec_token: "b448817b-e664-4fce-93fa-79d0c90ba57"
+      ludus_k8s_splunk_hec_token: "0ebd3b96-8a06-41fe-a6c6-b6ef05a1b076"
       # Calculate Splunk server IP based on VLAN and octet
       ludus_k8s_splunk_server_ip: "10.{{ range_second_octet }}.10.11"
 
