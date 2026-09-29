@@ -142,13 +142,34 @@ Open up a `root` shell on your Proxmox host:
 
 ![](img/20250913103948.png)
 
-And enter the following commands:
+First, find the bridge for your range. Ludus names each range's bridge `vmbr` followed by 1000 plus your range number, and the range number is the second octet of your range's IPs. For example, a range on `10.1.x.x` uses `vmbr1001`, and a range on `10.2.x.x` uses `vmbr1002`.
 
-`brctl setageing vmbr1002 0`
+You can confirm this by checking which bridge the `pcap` VM is attached to:
 
-`ip link set vmbr1002 promisc on`
+`qm list | grep -i pcap`
 
-No reboot should be necessary for these changes to take affect.
+`qm config <vmid> | grep ^net`
+
+The output will include `bridge=vmbrXXXX`. Use that bridge name in place of `vmbr1001` in the commands below.
+
+Enter the following commands:
+
+`brctl setageing vmbr1001 0`
+
+`ip link set vmbr1001 promisc on`
+
+No reboot should be necessary for these changes to take effect.
+
+These changes do not survive a reboot of the Proxmox host. To make them permanent, open `/etc/network/interfaces`, find the `iface vmbr1001` block (inside the `LUDUS MANAGED INTERFACE` section), and add these two lines to the end of it, indented to match the other lines:
+
+```
+    post-up brctl setageing vmbr1001 0
+    post-up ip link set vmbr1001 promisc on
+```
+
+Make sure they are above the `# LUDUS MANAGED INTERFACE ... END` line. After the next host reboot, you can check they applied with `cat /sys/class/net/vmbr1001/bridge/ageing_time` (should print `0`) and `ip link show vmbr1001` (should include `PROMISC`).
+
+Because this block is managed by Ludus, it may be rewritten if your Ludus user or range is recreated. If packet capture stops working after a rebuild, check that the two lines are still present with `grep -n vmbr1001 /etc/network/interfaces`.
 
 
 ### Credentials
